@@ -1,0 +1,17 @@
+{
+  "name": "DatastreamAggregationCapability",
+  "description": "Aggregates Observations from a Datastream.",
+  "taskingParameters": {
+    "type": "Category",
+    "name": "aggregationType",
+    "label": "aggregation type",
+    "description": "Which computation-method is used for this aggregation.",
+    "constraint": {
+      "type": "AllowedTokens",
+      "value": [
+        "Average",
+        "Sum"
+      ]
+    }
+  }
+}

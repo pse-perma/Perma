@@ -1,0 +1,54 @@
+<h1>Server-Browser</h1>
+<alert type="danger" *ngIf="error != null">
+  <strong>Hoppla!</strong> Fehler beim Abrufen der Server.
+</alert>
+<alert type="success" [dismissOnTimeout]=5000 *ngIf="connectSuccess == true">
+  <strong>Erfolg!</strong> Mit Server verbunden.
+</alert>
+<alert type="success" [dismissOnTimeout]=5000 *ngIf="deleteSuccess == true">
+  <strong>Erfolg!</strong> Server wurde gelöscht.
+</alert>
+<h4>Serverliste:</h4>
+<!--Iterates over Servers2 array and creates unordered list-->
+<div style="padding: 5px" class="list-group" *ngFor="let serverType of Servers2" (click)="onSelect(serverType)">
+  <ul style="max-width: 700px" class="list-group-item"
+      [ngClass]="{'list-group-item-secondary': selectedServer.url === serverType.url}">{{serverType.name}}:
+    Url: {{serverType.url}}</ul>
+</div>
+
+<div><a style="font-weight: bold">Gewählter Sensor-Things Server: {{selectedServer.name}}</a></div>
+
+<div style="margin-top: 10px">
+  <button class="btn btn-dark" title="Verbinden"
+          (click)="onConnectButtonPressed(selectedServer)"
+          [disabled]="selectedServer?.url == null">Mit Server verbinden
+  </button>
+  <button style="margin-left: 5px" class="btn btn-danger" title="Server löschen" (click)="onDelete(selectedServer)"
+          [disabled]="selectedServer?.url == ''">Gewählten Server löschen
+</button>
+</div>
+<div style="margin-top: 10px">
+  <label>Name:
+  <input class="form-control" [(ngModel)]="NewServer.name">
+  </label>
+  <label style="margin-left: 5px">URL:
+  <input class="form-control" [(ngModel)]="NewServer.url">
+  </label>
+  <button style="margin-left: 5px" class="btn btn-dark" (click)="onNewServerButtonPressed([NewServer])"
+          [disabled]="NewServer.url == '' || NewServer.name == ''">Neuen Server Hinzufügen
+  </button>
+</div>
+<!--<div class="alert alert-warning" role="alert"><strong>Warnung!</strong> Server konnten nicht vom Backend abgerufen werden!</div>-->
+
+<!--<button mat-raised-button (click)="onNewServerButtonPressed()"-->
+<!--<div class="row">-->
+  <!--<div class="col">-->
+    <!--<div ngbDropdown class="d-inline-block">-->
+      <!--<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>-->
+      <!--<div ngbDropdownMenu aria-labelledby="dropdownBasic1">-->
+        <!--<button class="dropdown-item">Action - 1</button>-->
+        <!--<button class="dropdown-item">Another Action</button>-->
+        <!--<button class="dropdown-item">Something else is here</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->

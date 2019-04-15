@@ -1,0 +1,73 @@
+<h1>{{Actuator?.name}} Details</h1>
+<!--The Task Log of the current Actuator-->
+<!--<div class="TaskLog">-->
+<!--<li *ngFor="let task of Tasks">-->
+<!--<span class="liste">{{task?.creationTime}}, {{task?.name}}, {{task?.state}}</span>-->
+<!--</li>-->
+<!--</div>-->
+<!--The Tasking Capabilities of the current Actuator-->
+<form style="max-width: 300px">
+  <div>
+    <label style="font-weight: bold">Name:</label>
+    <p>{{Actuator?.name}}</p>
+  </div>
+  <div>
+    <label style="font-weight: bold">Actuator-ID:</label>
+    <p>{{Actuator?.id}}</p>
+  </div>
+  <div>
+    <label for="encoding" style="font-weight: bold">Encoding Type:</label>
+    <p id="encoding">{{Actuator?.encodingType}}</p>
+    <p style="font-weight: bold;">Metadata:</p>
+    <p>{{Actuator?.metadata}}</p>
+  </div>
+</form>
+<div class="capabilities">
+  <p style="font-weight: bold">Tasking Capability(s):</p>
+  <!--<label>Standort:</label>-->
+  <!--  {{Actuator?.location_longitude}}
+    {{Actuator?.location_latitude}}-->
+  <!--  <ul>
+      <li *ngFor="let taskingCapability of taskingCapabilities">
+        {{taskingCapability}} &lt;!&ndash;&ndash;&gt;
+      </li>
+    </ul>-->
+  <!--<button class="btn btn-dark">Änderungen Speichern</button>-->
+  <ul class="taskingCapabilities">
+    <li *ngFor="let taskingCapability of Actuator?.TaskingCapability">
+      <span>{{taskingCapability?.name}}: </span>
+      <span>{{taskingCapability?.description}}</span>
+      <ul class="taskingParameters">
+        <a *ngIf="taskingCapability.taskingParameters.field != null || taskingCapability.taskingParameters.name != null"
+           style="font-weight: bold">Tasking Parameter:</a>
+        <ul class="taskingParameter1" *ngIf="taskingCapability.taskingParameters.field != null">
+          <!--<li *ngFor="let taskingParameter of taskingCapability?.taskingParameters.field">
+            <span>{{taskingParameter.name}}:</span>
+            <span>{{taskingParameter.description}}</span>
+          </li>-->
+          <pre>{{taskingCapability.taskingParameters.field | json}}</pre>
+        </ul>
+        <ul *ngIf="taskingCapability.taskingParameters.field == null" class="taskingParameter2">
+          <!--<li *ngFor="let taskingParameter of taskingCapability?.taskingParameters">
+            <span>{{taskingParameter.name}}:</span>
+            <span>{{taskingParameter.label}}</span>
+          </li>-->
+          <pre>{{taskingCapability.taskingParameters | json}}</pre>
+        </ul>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div *ngIf="Things?.length > 0" class="Locations">
+  <p style="font-weight: bold">Standort:</p>
+  <ul class="LocationList">
+    <li *ngFor="let location of Things">
+      <span>Längengrad: {{location?.geometry.coordinates[0]}}</span>
+      <span>Breitengrad: {{location?.geometry.coordinates[1]}}</span>
+    </li>
+  </ul>
+</div>
+<div *ngIf="Sensor != null" class="Sensor">
+  <p style="font-weight: bold">Sensor:</p>
+  <pre>{{Sensor?.Datastreams | json}}</pre>
+</div>

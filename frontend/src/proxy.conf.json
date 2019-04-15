@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "<BACKEND>",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

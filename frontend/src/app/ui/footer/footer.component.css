@@ -1,0 +1,8 @@
+/*Color of the heart icon*/
+.fa-heart {
+  color: mediumvioletred;
+}
+/*Bring Navbar to front*/
+.navbar {
+  z-index: 999;
+}

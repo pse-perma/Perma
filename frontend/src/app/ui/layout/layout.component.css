@@ -1,0 +1,10 @@
+/*Dont let side content start at the edge of the sidenav*/
+.content {
+  margin: 2.5%;
+}
+
+.nav-link {
+  margin-left: 0;
+  padding-left: 0;
+  color: white;
+}

@@ -1,0 +1,27 @@
+{
+  "stHttpServerUrl": "http://localhost:8080/FROST-Server/v1.0/",
+  "stMqttServerUrl": "tcp://localhost:1883",
+  "stMqttTopicPrefix": "v1.0/",
+
+  "actuatorName": "AggregatorActuator",
+  "actuatorDescription": "Actuator for Aggregator-testing",
+  "actuatorEncodingType": "application/perma.virtualactuator",
+
+  "capabilityJars": [ {
+      "file": "va_capability_aggregator/build/libs/va_capability_aggregator.jar"
+    }
+  ],
+  "commonActuatorThing": {
+    "name": "AggregatorActuator-Thing",
+    "description": "A Thing to which all TaskingCapabilities of AggregatorActuator are linked.",
+    "locations": [
+      {
+        "name" : "AggregatorActuator-Thing-Location",
+        "description" : "By accident the location of weather station Astico a Pedescala.",
+        "encodingType" : "application/vnd.geo+json",
+        "location" : {"type":"Point","coordinates":[11.36721706,45.84474522]}
+      }
+    ]
+  },
+  "idMapFile": "idMap_pse-docker-aggregator.json"
+}

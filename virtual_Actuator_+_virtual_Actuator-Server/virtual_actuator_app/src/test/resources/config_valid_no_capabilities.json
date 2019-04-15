@@ -1,0 +1,12 @@
+{
+  "stHttpServerUrl": "http://example.invalid/",
+  "stMqttServerUrl": "tcp://example.invalid:30000",
+
+  "actuatorName": "TestActuator",
+  "actuatorDescription": "Actuator for unit-testing.",
+
+  "commonActuatorThing": {
+    "name": "TestActuator-Thing",
+    "description": "A thing for TestActuator."
+  }
+}

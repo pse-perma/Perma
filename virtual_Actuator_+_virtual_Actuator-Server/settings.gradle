@@ -1,0 +1,8 @@
+rootProject.name = "virtual_actuator"
+
+include 'virtual_actuator_app'
+include 'va_capability'
+include 'va_capability_example'
+include 'va_capability_aggregator'
+include 'va_capability_server'
+include 'va_capability_radio'

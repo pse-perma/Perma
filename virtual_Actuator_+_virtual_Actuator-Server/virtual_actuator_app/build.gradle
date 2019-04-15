@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    /*maven {
+        url "https://dl.bintray.com/fraunhoferiosb/Maven"
+    }*/
+    mavenLocal()
+}
+
+dependencies {
+    implementation project(':va_capability')
+
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.8"
+    compile "de.fraunhofer.iosb.ilt:FROST-Client:0.20-SNAPSHOT"
+    compile "org.slf4j:slf4j-simple:1.7.25"
+    compile "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.testcontainers:testcontainers:1.10.6"
+}
+
+mainClassName = 'com.github.pse_perma.perma.virtual_actuator.app.VirtualActuator'
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}

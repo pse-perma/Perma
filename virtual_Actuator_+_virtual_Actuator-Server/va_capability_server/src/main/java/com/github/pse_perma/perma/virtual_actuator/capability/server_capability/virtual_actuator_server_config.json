@@ -1,0 +1,15 @@
+{
+  "stHttpServerUrl": "https://pse-frost.docker01.ilt-dmz.iosb.fraunhofer.de/v1.0/",
+  "stMqttServerUrl": "tcp://pse-frost.docker01.ilt-dmz.iosb.fraunhofer.de:30000",
+  "stMqttTopicPrefix": "v1.0/",
+
+  "actuatorName": "VirtualActuatorServer",
+  "actuatorDescription": "Management of Virtual Actuator Servers",
+  "capabilityJars": [
+    "va_capability_server.jar"
+  ],
+  "commonActuatorThing": {
+    "name": "VirtualActuatorServer-Thing",
+    "description": "A Thing to which all TaskingCapabilities of Virtual Actuator Server are linked."
+  }
+}

@@ -1,0 +1,200 @@
+<h1>Task erstellen</h1>
+<alert type="danger" *ngIf="error != null">
+  <strong>Oh nein!</strong> Fehler beim Erstellen des Tasks!
+</alert>
+<alert type="success" [dismissOnTimeout]=5000 *ngIf="successful == true">
+  <strong>Erfolg!</strong> Task wurde erstellt.
+</alert>
+<h3>Neuer Task erstellen</h3>
+
+<form style="max-width: 300px">
+  <!--<div class="form-group">-->
+  <!--<label for="TaskType">Art:</label>-->
+  <!--<select class="form-control" id="TaskType">-->
+  <!--<option>Sofort-Task</option>-->
+  <!--</select>-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+  <!--<label for="taskname">Task Name:</label>-->
+  <!--<input class="form-control" id="taskname" ngModel="{{name}}" name="name"> &lt;!&ndash;TO--DO: right ngModel brackets&ndash;&gt;-->
+  <!--</div>-->
+  <div class="form-group">
+    <label for="selected">Beteiligter Aktor:</label>
+    <p class="form-control" id="selected">{{selectedActuator?.name}}</p>
+    <!--<label>{{selectedActuator?.id}}</label>-->
+    <button type="button" class="btn btn-dark form-control" (click)="openModal(template); getActuators()">Aktor wählen
+    </button>
+  </div>
+  <div class="form-group">
+    <!--<label [(ngModel)]="capability">Capability:</label>-->
+    <label for="capa">Capability:</label>
+    <select class="form-control" id="capa" [(ngModel)]="selectedCapability" name="capabilityChooser">
+      <option name="capability" *ngFor="let Taskingcapability of selectedActuator?.TaskingCapability"
+              [ngValue]="Taskingcapability">{{Taskingcapability.name}}</option>
+    </select>
+  </div>
+
+  <div class="form-group" style="margin-left: 10px">
+    <a style="font-weight: bold" *ngIf="selectedCapability?.taskingParameters.type != null ||
+    selectedCapability?.taskingParameters.name != null || selectedCapability?.taskingParameters.name != null ||
+     selectedCapability?.taskingParameters.description != null">Capability Details:</a>
+    <br>
+    <label style="font-weight: bold" *ngIf="selectedCapability?.taskingParameters.type != null" for="type">Typ:</label>
+    <p id="type">{{selectedCapability?.taskingParameters.type}}</p>
+
+    <label style="font-weight: bold" *ngIf="selectedCapability?.taskingParameters.name != null"
+           for="tkName">Name:</label>
+    <p id="tkName">{{selectedCapability?.taskingParameters.name}}</p>
+
+    <label style="font-weight: bold" for="tkparametersLabel" *ngIf="selectedCapability?.taskingParameters.name != null">Label:</label>
+    <p id="tkparametersLabel" *ngIf="selectedCapability?.taskingParameters.name != null">
+      {{selectedCapability?.taskingParameters.label}}</p>
+    <label style="font-weight: bold"
+           *ngIf="selectedCapability?.taskingParameters.description != null">Beschreibung:</label>
+    <p>{{selectedCapability?.taskingParameters.description}}</p>
+  </div>
+
+  <br>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Boolean'">
+    <label for="boolChooser" style="font-weight: bold">Wert:</label>
+    <select id="boolChooser" [(ngModel)]="value" name="booleanChooser">
+      <option>true</option>
+      <option>false</option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Text'">
+    <label for="textChooser" style="font-weight: bold">Wert:</label>
+    <input id="textChooser" *ngIf="selectedCapability?.taskingParameters.constraint != null" name="TextChooser"
+           [(ngModel)]="value">
+    <input id="textChooser2" *ngIf="selectedCapability?.taskingParameters.constraint == null" name="TextChooser2"
+           [(ngModel)]="value">
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Category'">
+    <label for="categoryChooser" style="font-weight: bold">Wert:</label>
+    <select id="categoryChooser" [(ngModel)]="value" name="CategoryChooser">
+      <option *ngFor="let valuee of selectedCapability?.taskingParameters.constraint.value">{{valuee}}</option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Count'">
+    <label for="countChooser" style="font-weight: bold">Wert:</label>
+    <input id="countChooser" [(ngModel)]="value" name="CountChooser" (change)="checkParams()">
+    <br>
+    <label *ngIf="selectedCapability?.taskingParameters.constraint != null">Wertebereich:
+      von {{selectedCapability?.taskingParameters?.constraint.interval[0].toString()}}
+      bis {{selectedCapability?.taskingParameters?.constraint.interval[1].toString()}}</label>
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Quantity'">
+    <label for="quanititySelector" style="font-weight: bold">Wert:</label>
+    <select id="quanititySelector" [(ngModel)]="value" name="QuantityChooser"
+            *ngIf="selectedCapability?.taskingParameters.constraint.interval == null">
+      <option *ngFor="let constraint of selectedCapability?.taskingParameters.constraint.value">{{constraint}}</option>
+    </select>
+    <input id="quantitySelector2" *ngIf="selectedCapability?.taskingParameters.constraint.interval != null"
+           [(ngModel)]="value"
+           name="QuantityChooser2" (change)="checkParams()">
+    <label>{{selectedCapability?.taskingParameters.unitOfMeasurement.symbol}}</label>
+    <p *ngIf="selectedCapability?.taskingParameters.constraint.significantFigures != null">
+      Nachkommastellen: {{selectedCapability?.taskingParameters.constraint.significantFigures}}</p>
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Time'">
+    <label for="timeChooser" style="font-weight: bold">Wert:</label>
+    <input id="timeChooser" [(ngModel)]="value" name="TimeChooser" (change)="checkParams()">
+  </div>
+  <!--<div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Location'">-->
+  <!--<input id="locationChooser" [(ngModel)]="value" name="LocationChooser" (change)="checkParams()">-->
+  <!--&lt;!&ndash;TO--DO: location handling work like this&ndash;&gt;-->
+  <!--</div>-->
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'CategoryRange'">
+    <br>
+    <label style="font-weight: bold">Wert:</label>
+    <label for="categoryRangeChooser">Von:</label>
+    <select id="categoryRangeChooser" name="CategoryRangeChooser" [(ngModel)]="value">
+      <option *ngFor="let value of selectedCapability?.taskingParameters.constraint.value">{{value}}</option>
+    </select>
+    <br>
+    <label for="categoryRangeChooser2">Bis:</label>
+    <select id="categoryRangeChooser2" [(ngModel)]="value2">
+      <option *ngFor="let value of selectedCapability?.taskingParameters.constraint.value">{{value}}</option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'CountRange'">
+    <label for="countRangeChooser" style="font-weight: bold">Wert1:</label>
+    <input id="countRangeChooser" [(ngModel)]="value">
+    <label for="countRangeChooser2" style="font-weight: bold">Wert2:</label>
+    <input id="countRangeChooser2" [(ngModel)]="value2">
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'CountRange'">
+    <label style="font-weight: bold">Wert:</label> <!--TODO: Constraints checken-->
+    <label for="countRangeFromChooser">Von:</label>
+    <input id="countRangeFromChooser" *ngIf="selectedCapability?.taskingParameters.constraint.value[0]"
+           name="CountRangeFromChooser"
+           [(ngModel)]="value">
+    <br>
+    <label for="countRangeFromChooser2">Bis:</label>
+    <input id="countRangeFromChooser2" *ngIf="selectedCapability?.taskingParameters.constraint.value[1]"
+           name="CountRangeFromChooser2"
+           [(ngModel)]="value2">
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'QuantityRange'">
+    <label style="font-weight: bold">Wert:</label> <!--TODO: Constraints checken-->
+    <label for="quantitiyRangeFromChooser">Von:</label>
+    <input id="quantitiyRangeFromChooser" *ngIf="selectedCapability?.taskingParameters.constraint.value[0]"
+           name="QuantityRangeFromChooser"
+           [(ngModel)]="value">
+    <br>
+    <label for="quantitiyRangeToChooser">Bis:</label>
+    <input id="quantitiyRangeToChooser" *ngIf="selectedCapability?.taskingParameters.constraint.value[1]"
+           name="QuantityRangeFromChooser2"
+           [(ngModel)]="value2">
+  </div>
+  <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'TimeRange'">
+    <label style="font-weight: bold">Wert:</label> <!--TODO: Constraints checken-->
+    <label for="quantityRangeChooser">Von:</label>
+    <input id="quantityRangeChooser" *ngIf="selectedCapability?.taskingParameters.constraint.value[0]"
+           name="QuantityRangeChooser"
+           [(ngModel)]="value">
+    <br>
+    <label for="quantityRangeChooser2">Bis:</label>
+    <input id="quantityRangeChooser2" *ngIf="selectedCapability?.taskingParameters.constraint.value[1]"
+           name="QuantityRangeChooser2"
+           [(ngModel)]="value2">
+  </div>
+
+</form>
+<button class="btn btn-dark" (click)="submitTask()">Task Erstellen</button>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Aktoren</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <alert type="danger" *ngIf="modalError != null">
+      <strong>Hoppla!</strong> Fehler beim Abrufen der Aktoren
+    </alert>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Aktor-ID</th>
+          <th scope="col">Name</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let actuator of Actuators">
+        <tr>
+          <th (click)="selectedActuator = actuator; modalRef.hide()">{{actuator.id}}</th>
+          <th (click)="selectedActuator = actuator; modalRef.hide()">
+            {{actuator?.name}}</th>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="error == null && Actuators != null" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!--
+; NewTask.actuatorId = acutator.id.toString();-->

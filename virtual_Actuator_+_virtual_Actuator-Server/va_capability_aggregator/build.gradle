@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    /*maven {
+        url "https://dl.bintray.com/fraunhoferiosb/Maven"
+    }*/
+    mavenLocal()
+}
+
+dependencies {
+    api project(':va_capability')
+    compile "de.fraunhofer.iosb.ilt:FROST-Client:0.20-SNAPSHOT"
+}
+

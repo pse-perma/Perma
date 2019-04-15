@@ -1,0 +1,14 @@
+.TaskLog {
+  margin-top: 15px;
+  margin-right: 20px;
+  float: left;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  min-width: 500px !important;
+  min-height: 150px;
+}
+
+.capabilities {
+  float: none;
+}

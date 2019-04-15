@@ -1,0 +1,60 @@
+version : '2'
+services:
+    frontend:
+        image: perma-frontend
+        ports:
+            - "80:4200"
+        environment:
+            - BACKEND_URL=http://backend:8080
+
+    backend:
+        image: perma-backend
+        environment:
+            - ST_SERVER_URL=http://frost-server:8080/FROST-Server/v1.0/
+        volumes:
+            - backend_config:/tmp/config
+
+    virtual-actuator-server:
+        image: perma-vas
+        environment:
+            - VA_HTTP_SERVER=http://frost-server:8080/FROST-Server/v1.0/
+            - VA_MQTT_SERVER=tcp://frost-server:1883
+            - VA_MQTT_PREFIX=v1.0/
+        depends_on:
+            - frost-server
+        volumes:
+            - vas_volume_data:/app/data
+            - vas_volume_actuators:/app/actuators
+
+    frost-server:
+        image: fraunhoferiosb/frost-server:ActuatorRework-1.10-SNAPSHOT
+        ports:
+            - "8080:8080"
+            - "1883:1883"
+        environment:
+          - serviceRootUrl=http://localhost:8080/FROST-Server
+          - http_cors_enable=true
+          - http_cors_allowed.origins=*
+          - persistence_db_driver=org.postgresql.Driver
+          - persistence_db_url=jdbc:postgresql://database:5432/sensorthings
+          - persistence_db_username=sensorthings
+          - persistence_db_password=ChangeMe
+          - persistence_autoUpdateDatabase=true
+          - enableActuation=true
+        depends_on:
+            - database
+
+    database:
+        image: mdillon/postgis:10
+        environment:
+            - POSTGRES_DB=sensorthings
+            - POSTGRES_USER=sensorthings
+            - POSTGRES_PASSWORD=ChangeMe
+        volumes:
+            - postgis_volume:/var/lib/postgresql/data
+
+volumes:
+    postgis_volume:
+    vas_volume_data:
+    vas_volume_actuators:
+    backend_config:

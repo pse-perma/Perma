@@ -1,0 +1,9 @@
+{
+  "name" : "radio on/off capability",
+  "description" : "Turns the radio on or off.",
+  "taskingParameters" : {
+    "name" : "status",
+    "label" : "radio on/off status",
+    "type" : "Boolean"
+  }
+}

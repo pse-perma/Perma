@@ -1,0 +1,28 @@
+<!--Top Bar-->
+<app-header></app-header>
+<!--Side Bar-->
+<ng-sidebar-container> <!--style="height: 100vh;"-->
+  <ng-sidebar [opened]=true mode="push">
+    <!--Sidebar Entrys-->
+    <a style="font-weight: bold">Menü</a>
+    <a class="nav-link" routerLink="frontpage">Startseite</a>
+    <a class="nav-link" routerLink="servers">Server-Browser</a>
+    <a class="nav-link" routerLink="actuators">Aktoren</a>
+    <a class="nav-link" routerLink="virtual-actuator">Virtuellen Aktor<br/>erstellen</a>
+    <a class="nav-link" routerLink="tasks">Tasks</a>
+    <a class="nav-link" routerLink="task-create-simple">Task Erstellen</a>
+  </ng-sidebar>
+  <!--App Components-->
+  <div ng-sidebar-content>
+
+    <div class="content">
+    <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</ng-sidebar-container>
+<!--Bottom Bar-->
+<!--<app-footer></app-footer>-->
+
+
+<!--https://github.com/arkon/ng-sidebar/tree/master/src-->

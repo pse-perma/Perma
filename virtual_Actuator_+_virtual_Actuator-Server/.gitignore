@@ -1,0 +1,19 @@
+# Gradle
+.gradle
+build
+gradle/
+gradlew
+gradlew.bat
+#.gitignore#
+
+# IntelliJ
+.idea
+out
+
+# application-generated
+idMap.json
+vas-idMap.json
+actuators/
+
+# testing-artifacts
+config_compose_test_file.json

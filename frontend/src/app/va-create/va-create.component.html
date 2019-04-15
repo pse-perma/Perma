@@ -1,0 +1,76 @@
+<h1>Neuen virtuellen Aktor erstellen</h1>
+&nbsp;
+<alert type="danger" *ngIf="createError != null">
+  <strong>Fehler</strong>Virtueller Aktor konnte nicht erstellt werden, sind die Parameter korrekt?
+</alert>
+<alert type="success" [dismissOnTimeout]=5000 *ngIf="successful == true">
+  <strong>Erfolg!</strong> Virtueller Aktor wurde erstellt.
+</alert>
+&nbsp;
+<form style="padding-top: 15px; max-width: 300px">
+  <div class="form-group">
+    <label for="vaname">Name:</label>
+    <input class="form-control" [(ngModel)]="taskingParameter.vaName" id="vaname" name="vaname">
+  </div>
+  <div class="form-group">
+    <label for="vasselect">VA-Server:</label>
+    <select class="form-control" [(ngModel)]="selectedVAS" name="VASSelector" id="vasselect">
+      <option *ngFor="let VAS of availableVAS" [ngValue]="VAS">{{VAS?.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="vadescription">Beschreibung:</label>
+    <input class="form-control" [(ngModel)]="taskingParameter.vaDescription" id="vadescription" name="vadescription">
+  </div>
+  <div class="form-group">
+    <label for="thingname">Name des Things:</label>
+    <input class="form-control" [(ngModel)]="taskingParameter.thingName" id="thingname" name="thingname">
+  </div>
+  <div class="form-group">
+    <label for="descr">Beschreibung des Things:</label>
+    <input class="form-control" [(ngModel)]="taskingParameter.thingDescription" id="descr" name="descr">
+  </div>
+  <div class="form-group">
+    <label for="capList">TaskingCapability:</label>
+    <select class="form-control" id="capList" name="capList" [(ngModel)]="selectedCapability">
+      <option *ngFor="let capability of capabilityList" [ngValue]="capability">{{capability?.name}}</option>
+    </select>
+    <button style="margin-top: 5px" type="button" class="btn btn-dark form-control"
+            (click)="openModal(template); getCapabilities()">Neue
+      Tasking Capability hinzufügen
+    </button>
+
+    <!--<button class="btn btn-dark">Capability aus JAR-Datei laden</button>-->
+  </div>
+  <!--<label>Virtueller Aktor Server:</label>-->
+  <!--<label>TO-DO MODAL</label>-->
+  <button class="btn btn-dark" (click)="createVa()">Virtuellen Aktor erstellen</button>
+</form>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">JAR Datei hochladen</h4>
+    <button type="button" class="close pull-right" aria-label="Close"
+            (click)="modalRef.hide(); uploadError= false; getCapabilities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <input ng2FileSelect type="file" accept=".jar" [uploader]="uploader"/>
+      <div class="progress" style="">
+        <div class="progress-bar" style="margin: 5px" role="progressbar"
+             [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+      </div>
+      <alert style="margin-top: 5px" type="success" *ngIf="uploader.progress == 100 && uploadError == false">Upload
+        erfolgreich!
+      </alert>
+      <alert style="margin-top: 5px" type="danger" *ngIf="uploadError == true">Es ist ein Fehler beim Upload
+        aufgetreten!
+      </alert>
+      <button style="margin-top: 5px" class="btn btn-dark" (click)="uploader.uploadAll()"
+              [disabled]="!uploader.getNotUploadedItems().length">
+        Datei Hochladen
+      </button>
+    </form>
+  </div>
+</ng-template>

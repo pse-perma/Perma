@@ -1,0 +1,25 @@
+<h1>Task {{Task?.id}} Details</h1>
+
+<form>
+  <div>
+    <label style="font-weight: bold" *ngIf="Task?.name != null">Task Name:</label>
+    <p>{{Task?.name}}</p>
+  </div>
+  <div>
+    <label style="font-weight: bold">ID:</label>
+    <p>{{Task?.id}}</p>
+  </div>
+  <div>
+    <label style="font-weight: bold">Status:</label>
+    <p>{{Task?.taskingParameters.task_status}}</p>
+  </div>
+  <div>
+    <label style="font-weight: bold">Weitere Parameter:</label>
+    <div
+      style="min-width: 60px; min-height: 50px">
+      <!--<li *ngFor="let parameters of Task?.taskingParameters">{{parameters | json}}</li>-->
+      <pre>{{Task.taskingParameters | json}}</pre>
+    </div>
+  </div>
+
+</form>

@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.css";
+
+html, body {
+  height: calc(100vh - 56px);
+}
+
+.ng-sidebar {
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  pointer-events: auto;
+  touch-action: auto;
+  will-change: initial;
+  /*z-index: 0 !important;*/
+  background: #3f454b !important;
+  color: #fff;
+  padding: 1%;
+  padding-left: 2%;
+  /*height: calc(100% - 80px) !important;*/
+}

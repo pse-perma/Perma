@@ -1,0 +1,17 @@
+{
+  "stHttpServerUrl": "http://configured-via-environment.invalid/",
+  "stMqttServerUrl": "CONFIGURED_VIA_ENVIRONMENT",
+  "stMqttTopicPrefix": "CONFIGURED_VIA_ENVIRONMENT",
+
+  "actuatorName": "Docker-VirtualActuatorServer",
+  "actuatorDescription": "Virtual Actuator Server for testing, included in docker-compose",
+  "actuatorEncodingType": "application/perma.virtualactuator.server",
+
+  "capabilityJars": [{ "file": "va_capability_server/build/libs/va_capability_server.jar" }],
+
+  "commonActuatorThing": {
+    "name": "Docker-VirtualActuatorServer-Thing",
+    "description": "The Thing of the Docker-VirtualActuatorServer."
+  },
+  "idMapFile": "data/vas-idMap.json"
+}

@@ -1,0 +1,8 @@
+/*Bugfix for sidenav*/
+.navbar {
+  margin-bottom: 0 !important;
+}
+/*Leave margin between PERMA logo and Text*/
+.navbar-brand {
+  margin-right: 5px;
+}

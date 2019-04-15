@@ -1,0 +1,75 @@
+<h1>Aktoren</h1>
+<!--Left Container (everything, but options)-->
+<div style="width: 75%; float: left">
+  <div style="margin-bottom: 5px">
+    <alert type="danger" *ngIf="error != null">
+      <strong>Hoppla!</strong> Fehler beim Abrufen der Aktoren.
+    </alert>
+    <label for="filters">Filtern nach:</label>
+    &nbsp;
+    <select id="filters" [(ngModel)]="filterChoice">
+      <option>Name</option>
+      <!--<option>Standort</option>-->
+      <!--<option>Zeitstempel der letzten Änderung</option>-->
+    </select>
+    &nbsp;
+    <label>enthält:</label>
+    &nbsp;
+    <input [(ngModel)]="filterText">
+    &nbsp;
+    <button type="button" class="btn btn-dark" style="margin-right: 5px" (click)="doFilter()">Filtern</button>
+    <div class="float-right" style="padding-top: 10px">
+      <label>Elemente pro Seite:</label>
+      &nbsp;
+      <select [(ngModel)]="numPerPage" (change)="getActuators()">
+        <option>5</option>
+        <option>20</option>
+        <option>40</option>
+        <option>80</option>
+        <option>100</option>
+        <option>200</option>
+      </select>
+    </div>
+  </div>
+<!--Table of Actuators-->
+  <table class="table table-hover selected">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Aktor-ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Standort</th>
+      <!--<th scope="col">Zeitstempel</th>-->
+    </tr>
+  </thead>
+  <tbody *ngFor="let actuator of Actuators">
+    <tr>
+      <th scope="row" routerLink="{{actuator?.id}}">{{actuator.id}}</th>
+      <td routerLink="{{actuator?.id}}">{{actuator?.name || 'Unbekannt'}}</td>
+      <!--<th routerLink="{{actuator?.id}}">Lat:{{actuator?.location_latitude||'Unbekannt'}} Long:{{actuator?.location_longitude||'Unbekannt'}}</th>-->
+      <td routerLink="{{actuator?.id}}">Unbekannt</td>
+      <!--<td routerLink="{{actuator?.id}}">{{actuator?.timestamp || 'Unbekannt'}}</td>-->
+    </tr>
+  </tbody>
+</table>
+  <div *ngIf="error == null && Actuators == null" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+<!--Page Numbers of Table-->
+  <pagination [totalItems]="ActuatorCount" (ngModel)="currentPage" (pageChanged)="pageChanged($event)"
+              [itemsPerPage]="1" (numPages)="ActuatorCount = $event"></pagination>
+</div>
+<!--Right Container with options buttons-->
+<div style="width: 20%; float: right">
+  <a style="font-weight: bold">Optionen</a>
+  <form>
+    <button class="btn btn-dark" routerLink="/virtual-actuator">Neuen Virtuellen Aktor hinzufügen</button>
+    <button class="btn btn-dark" style="display: none" (click)="onDeleteVAButtonPressed()"
+            [disabled]="selectedActuator == null">Gewählten virtuellen Aktor löschen
+    </button>
+    <button class="btn btn-dark" style="display: none" (click)="onShowActuatorOnMapButtonPressed()"
+            [disabled]="selectedActuator == null">Gewählte Aktoren auf Karte anzeigen
+    </button>
+  </form>
+</div>
