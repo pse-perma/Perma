@@ -9,12 +9,12 @@ import {TaskType} from './taskType';
 })
 export class TaskComponent implements OnInit {
   Tasks: any[];
-  numPerPage = '20';
+  numPerPage: number = 20;
   currentPage = 1;
   filter: any;
   orderBy: any;
   selectedTask: any;
-  TaskCount = 1;
+  TaskCount: number;
   filterText = '';
   filterChoice = '';
   error: any;
@@ -29,8 +29,11 @@ export class TaskComponent implements OnInit {
   }
   // Retrieve Tasks from Service
   getTasks(): void {
-    this.taskService.getTaskCount(this.numPerPage).subscribe(count => this.TaskCount = count, error => this.error = error);
-    this.taskService.getTasks(this.numPerPage, this.currentPage, this.filter, this.orderBy).subscribe(task => this.Tasks = task,
+    this.taskService.getTaskCount(this.numPerPage.toString())
+      .subscribe(count => this.TaskCount = count,
+          error => this.error = error);
+    this.taskService.getTasks(this.numPerPage.toString(), this.currentPage, this.filter, this.orderBy)
+      .subscribe(task => this.Tasks = task,
       error => this.error = error);
   }
   // Call Service to delete selected Task

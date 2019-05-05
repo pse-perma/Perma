@@ -9,12 +9,12 @@ import {ActuatorService} from './actuator.service';
 })
 export class ActuatorComponent implements OnInit {
   Actuators: ActuatorType[];
-  numPerPage = '20';
+  numPerPage: number = 20;
   currentPage = 1;
   filter: string;
   // orderBy: any;
   selectedActuator: ActuatorType;
-  ActuatorCount = 1;
+  ActuatorCount: number;
   filterChoice = '';
   filterText = '';
   error: any;
@@ -25,11 +25,10 @@ export class ActuatorComponent implements OnInit {
   }
   // Retrieve Actuators from Service
   getActuators(): void {
-    this.actuatorService.getActuatorCount(this.numPerPage).subscribe(count => this.ActuatorCount = count, error => this.error = error);
-    this.actuatorService.getActuators(this.numPerPage, this.currentPage, this.filter)
+    this.actuatorService.getActuatorCount(this.numPerPage.toString()).subscribe(count => this.ActuatorCount = count, error => this.error = error);
+    this.actuatorService.getActuators(this.numPerPage.toString(), this.currentPage, this.filter)
       .subscribe(actuators => {
         this.Actuators = actuators;
-        console.log(actuators[1]);
       }, error => this.error = error);
   }
   // Call Service to delete virtual Actuator

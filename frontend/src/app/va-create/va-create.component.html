@@ -44,7 +44,9 @@
   </div>
   <!--<label>Virtueller Aktor Server:</label>-->
   <!--<label>TO-DO MODAL</label>-->
-  <button class="btn btn-dark" (click)="createVa()">Virtuellen Aktor erstellen</button>
+  <button class="btn btn-dark" [disabled]="!taskingParameter?.vaName || !selectedVAS || !taskingParameter?.vaDescription
+  || !taskingParameter?.thingName || !taskingParameter?.thingDescription || !selectedCapability"
+          (click)="createVa()">Virtuellen Aktor erstellen</button>
 </form>
 <ng-template #template>
   <div class="modal-header">

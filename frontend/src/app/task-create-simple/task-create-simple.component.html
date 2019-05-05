@@ -54,6 +54,12 @@
     <p>{{selectedCapability?.taskingParameters.description}}</p>
   </div>
 
+  <div class="form-group" *ngIf="selectedActuator?.name.match('\S*VirtualActuatorServer\S*')
+  && selectedCapability?.name == 'createNewVA'">
+    <p>Versuchen Sie einen neuen virtuellen Aktor zu erstellen? <br>
+    Verwenden Sie hierfür bitte die <a href="virtual-actuator">Virtuellen Aktor Erstellen</a> Seite.</p>
+  </div>
+
   <br>
   <div class="form-group" *ngIf="selectedCapability?.taskingParameters.type == 'Boolean'">
     <label for="boolChooser" style="font-weight: bold">Wert:</label>
@@ -161,7 +167,8 @@
   </div>
 
 </form>
-<button class="btn btn-dark" (click)="submitTask()">Task Erstellen</button>
+<button class="btn btn-dark" [disabled]="!selectedActuator || !selectedCapability || (!value
+&& !value2 && !valueArray)" (click)="submitTask()">Task Erstellen</button>
 
 <ng-template #template>
   <div class="modal-header">
@@ -189,7 +196,7 @@
         </tr>
       </tbody>
     </table>
-    <div *ngIf="error == null && Actuators != null" class="d-flex justify-content-center">
+    <div *ngIf="error == null && !Actuators" class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
