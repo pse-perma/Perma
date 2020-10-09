@@ -16,3 +16,10 @@ Alternatively, the components can be built separately. Check the readme files in
 
 ## Project structure
 ![](Systemmodell.png)
+
+## License
+
+This work is dual-licensed under AGPL v3.0 (or any later version) and MIT.
+You can choose between one of them if you use this work.
+
+`SPDX-License-Identifier: AGPL-3.0-or-later OR MIT`
