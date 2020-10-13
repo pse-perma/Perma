@@ -27,7 +27,7 @@
 		<jacksonGeojson.version>1.6</jacksonGeojson.version>
 		<jjwt.version>0.7.0</jjwt.version>
 		<json-patch.version>1.9</json-patch.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<slf4j-api.version>1.7.25</slf4j-api.version>
 		<threeten-extra.version>1.0</threeten-extra.version>
 	</properties>
